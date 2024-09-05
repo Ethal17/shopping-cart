@@ -1,12 +1,11 @@
-$(document).ready(function () {
-
-  });
-
   var updateSubTotalPrice = function (ele) {
     var cost = parseFloat($(ele).children('.cost').children(".costSpan").text());
     var quantity = $(ele).children(".quantityRow").children('.quantity').val();  
     var subTotalPrice = cost * quantity;
-
+    var trCount = $('tr');
+    if (trCount == undefined) {
+      return false;
+    }
     $(ele).children('.price').text("$" + subTotalPrice);
 
     return subTotalPrice;
@@ -54,6 +53,7 @@ $(document).ready(function () {
     updateSubTotalPrice($(ele));
   });
     updateTotalPrice();
+    $('.productInput').val("");
   });
   });
   
@@ -64,7 +64,11 @@ $(document).ready(function () {
       var subTotal = updateSubTotalPrice(ele);
       subTotalValues.push(subTotal);
     });
-  
+  if (subTotalValues.length > 0) {
   var totalPrice = subTotalValues.reduce(sum);
   $('#totalPriceSpan').html(totalPrice);
+  }
+  else {
+    $('#totalPriceSpan').html(0);
+  }
   }
